@@ -27,6 +27,15 @@ async def websocket_web(websocket: WebSocket):
     # Endpoint cho trình duyệt Web kết nối tới
     await websocket.accept()
     web_clients.add(websocket)
+    
+    # ⚡ Yêu cầu Agent gửi lại toàn bộ cấu hình & thống kê lập tức cho tab Web mới mở
+    if agent_connection:
+        try:
+            await agent_connection.send_text(json.dumps({"type": "get_config"}))
+            await agent_connection.send_text(json.dumps({"type": "get_code_stats"}))
+        except Exception:
+            pass
+
     try:
         while True:
             # Nhận lệnh từ giao diện Web (VD: bấm nút Chạy GĐ1)
