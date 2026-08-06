@@ -437,7 +437,7 @@
 
             <!-- Terminal Screen Body -->
             <div class="p-3 bg-slate-950/20 backdrop-blur-xl relative">
-                <div id="terminal-container" class="rounded-lg overflow-hidden border border-sky-400/30 p-2 shadow-2xl"></div>
+                <div id="terminal-container" class="rounded-lg overflow-hidden border border-sky-400/30 p-2 shadow-2xl min-h-[380px] h-[450px]"></div>
             </div>
         </div>
 
@@ -678,6 +678,7 @@
                     
                     if (msg.type === "log") {
                         term.write(msg.data);
+                        try { term.scrollToBottom(); } catch(e){}
                     } 
                     else if (msg.type === "status") {
                         document.getElementById('cpu-bar').style.width = msg.cpu + '%';
