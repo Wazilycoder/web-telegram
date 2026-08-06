@@ -482,6 +482,10 @@
                             <input id="cfg-auto-proxy" type="checkbox" class="accent-abyssal-blue w-4 h-4" />
                             <span>Tự động xoay Proxy</span>
                         </label>
+                        <label class="flex items-center gap-2 text-sm cursor-pointer hover:text-abyssal-cyan transition-colors">
+                            <input id="cfg-hide-offscreen" type="checkbox" class="accent-abyssal-blue w-4 h-4" />
+                            <span>Ẩn Trình Duyệt Ngầm (No UI / Offscreen)</span>
+                        </label>
                     </div>
                 </div>
 
@@ -522,6 +526,10 @@
                         <label class="flex items-center gap-2 cursor-pointer hover:text-abyssal-cyan transition-colors">
                             <input id="cfg-return-maxblock" type="checkbox" class="accent-abyssal-blue w-4 h-4" />
                             <span>Về main quá chặn</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer hover:text-abyssal-cyan transition-colors">
+                            <input id="cfg-gemini-ocr" type="checkbox" class="accent-abyssal-blue w-4 h-4" />
+                            <span>Bật Gemini Vision OCR</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer col-span-2 hover:text-abyssal-cyan transition-colors">
                             <input id="cfg-sync-tele" type="checkbox" class="accent-abyssal-blue w-4 h-4" />
@@ -934,7 +942,8 @@
             active_profile_id: "profile_001",
             number_of_windows: 1,
             num_profiles: 1,
-            target_url: "https://skibiditask.online",
+            target_url: "https://kiemcom.site",
+            hide_browser_offscreen: false,
             tokens: ["3416891851c15d8fd4d0f6703d8cb024"],
             auto_start_gd1: true,
             auto_rotate_proxy: true,
@@ -950,6 +959,7 @@
             auto_loop_gd2: true,
             auto_return_main_out_of_code: true,
             auto_return_max_blocked: true,
+            enable_gemini_ocr: true,
             auto_telegram_sync_gd2: false
         };
 
@@ -992,6 +1002,7 @@
             else document.getElementById('cfg-tokens').value = c.tokens || '';
             document.getElementById('cfg-auto-start-gd1').checked = !!c.auto_start_gd1;
             document.getElementById('cfg-auto-proxy').checked = !!c.auto_rotate_proxy;
+            document.getElementById('cfg-hide-offscreen').checked = !!c.hide_browser_offscreen;
             document.getElementById('cfg-task-name').value = c.card_name || c.task_name || c.task_card_name || '';
             document.getElementById('cfg-target-domain').value = c.target_domain || c.task_target_domain || '';
             document.getElementById('cfg-blocked-codes').value = c.blocked_codes || '';
@@ -1000,6 +1011,7 @@
             document.getElementById('cfg-auto-loop-gd2').checked = !!c.auto_loop_gd2;
             document.getElementById('cfg-return-outcode').checked = !!c.auto_return_main_out_of_code;
             document.getElementById('cfg-return-maxblock').checked = !!c.auto_return_max_blocked;
+            document.getElementById('cfg-gemini-ocr').checked = c.enable_gemini_ocr !== undefined ? !!c.enable_gemini_ocr : true;
             document.getElementById('cfg-sync-tele').checked = !!c.auto_telegram_sync_gd2;
         }
 
@@ -1011,6 +1023,7 @@
                 number_of_windows: parseInt(document.getElementById('cfg-windows').value) || 1,
                 num_profiles: parseInt(document.getElementById('cfg-windows').value) || 1,
                 target_url: document.getElementById('cfg-target-url').value.trim(),
+                hide_browser_offscreen: document.getElementById('cfg-hide-offscreen').checked,
                 tokens: rawTokens ? rawTokens.split('\n').map(t => t.trim()).filter(t => t) : [],
                 auto_start_gd1: document.getElementById('cfg-auto-start-gd1').checked,
                 auto_rotate_proxy: document.getElementById('cfg-auto-proxy').checked,
@@ -1026,6 +1039,7 @@
                 auto_loop_gd2: document.getElementById('cfg-auto-loop-gd2').checked,
                 auto_return_main_out_of_code: document.getElementById('cfg-return-outcode').checked,
                 auto_return_max_blocked: document.getElementById('cfg-return-maxblock').checked,
+                enable_gemini_ocr: document.getElementById('cfg-gemini-ocr').checked,
                 auto_telegram_sync_gd2: document.getElementById('cfg-sync-tele').checked
             };
 

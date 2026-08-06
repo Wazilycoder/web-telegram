@@ -94,14 +94,16 @@ async def websocket_agent(websocket: WebSocket):
                 except Exception:
                     web_clients.discard(web)
     except WebSocketDisconnect:
-        agent_connection = None
-        for web in list(web_clients):
-            try:
-                await web.send_text(json.dumps({"type": "log", "data": "\n\r\033[1;31m[-] Máy tính Agent đã ngắt kết nối!\033[0m\n\r"}))
-            except Exception:
-                web_clients.discard(web)
+        if agent_connection == websocket:
+            agent_connection = None
+            for web in list(web_clients):
+                try:
+                    await web.send_text(json.dumps({"type": "log", "data": "\n\r\033[1;31m[-] Máy tính Agent đã ngắt kết nối!\033[0m\n\r"}))
+                except Exception:
+                    web_clients.discard(web)
     except Exception:
-        agent_connection = None
+        if agent_connection == websocket:
+            agent_connection = None
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
